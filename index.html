@@ -1,227 +1,188 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>Abu Zaid Engine V55 - Linguistic Master</title>
-<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Amiri:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرك أبو زيد | ABU ZAID Engine</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="theme-color" content="#0f172a">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Amiri:wght@700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
 
-<style>
-:root{
-  --bg-dark: #0f172a; --card-dark: rgba(30, 41, 59, 0.8);
-  --text-main-dark: #f8fafc; --accent-dark: #fbbf24;
-  --bg-light: #f1f5f9; --card-light: #ffffff; 
-  --text-main-light: #0f172a; --accent-light: #b91c1c;
-  --egp: #0891b2; --sar: #059669; --usd: #d97706; --eur: #2563eb;
-}
+    <style>
+        :root {
+            --bg-dark: #0f172a; --card-dark: rgba(30, 41, 59, 0.8);
+            --accent: #fbbf24; --text: #f8fafc;
+        }
+        body { margin:0; font-family: 'Almarai', sans-serif; background: var(--bg-dark); color: var(--text); min-height: 100vh; }
+        .container { max-width: 900px; margin: auto; padding: 20px; text-align: center; }
+        .branding { font-family: 'Amiri', serif; font-size: 35px; color: var(--accent); margin-bottom: 10px; }
+        
+        .info-bar { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px 0; margin-bottom: 20px; font-size: 0.9rem; }
+        .clock { font-size: 2.5rem; font-weight: 800; color: #fff; margin: 15px 0; }
 
-body { margin:0; font-family: 'Almarai', sans-serif; transition: 0.5s; min-height: 100vh; background-attachment: fixed; }
-body.dark { background: var(--bg-dark); color: var(--text-main-dark); background-image: radial-gradient(circle at top right, #1e293b, #0f172a); }
-body.light { background: var(--bg-light); color: var(--text-main-light); }
+        .input-area { background: var(--card-dark); padding: 30px; border-radius: 24px; border: 1px solid rgba(251, 191, 36, 0.3); margin-bottom: 20px; }
+        input, select { 
+            width: 100%; padding: 15px; margin: 10px 0; border-radius: 12px; border: none; 
+            font-size: 1.2rem; font-weight: bold; text-align: center; font-family: 'IBM Plex Sans Arabic';
+        }
+        .btn { 
+            background: var(--accent); color: #000; padding: 15px 40px; border-radius: 50px; 
+            border: none; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.3s;
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4); }
 
-.container { max-width: 826px; margin: auto; padding: 25px 20px; text-align: center; }
-.signature-top { font-family: 'Amiri', serif; font-size: 30px; margin-bottom: 20px; color: var(--accent-dark); }
-.clock { font-size: 40px; font-weight: 700; font-family: 'IBM Plex Sans Arabic', sans-serif; margin: 10px 0; letter-spacing: -1px; }
-body.dark .clock { color: #fff; text-shadow: 0 0 12px rgba(8, 145, 178, 0.5); }
-
-.header-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid rgba(128,128,128,0.2); padding-bottom: 15px; }
-.date-style { font-family: 'Amiri', serif; font-size: 19px; width: 35%; font-weight: 700; opacity: 0.9; }
-
-.input-group { max-width: 624px; margin: 0 auto 25px auto; }
-input {
-  width: 100%; padding: 18px; border-radius: 16px; border: 2px solid transparent;
-  font-size: 26px; text-align: center; font-weight: 700; font-family: 'IBM Plex Sans Arabic', sans-serif; transition: 0.3s;
-}
-body.dark input { background: #1e293b; color: #fff; }
-body.light input { background: #fff; border-color: #e2e8f0; }
-
-.convert-btn {
-    padding: 15px 55px; border-radius: 50px; border: none; cursor: pointer;
-    font-family: 'Almarai', sans-serif; font-size: 17px; font-weight: 800;
-    background: linear-gradient(135deg, var(--egp), #06b6d4); color: white; margin-top: 15px;
-}
-
-.results-grid { display: flex; flex-direction: column; gap: 12px; }
-.card { 
-    padding: 22px 28px; border-radius: 20px; text-align: right; transition: 0.3s;
-    cursor: pointer; backdrop-filter: blur(10px); position: relative; border: 1px solid rgba(128,128,128,0.1);
-}
-body.dark .card { background: var(--card-dark); }
-.card:hover { transform: scale(1.01); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
-
-.currency-label { font-size: 14px; font-weight: 800; margin-bottom: 8px; display: block; }
-.ar-text { font-family: 'Amiri', serif; font-size: 1.7rem; font-weight: 700; margin-bottom: 5px; }
-.en-text { font-size: 13px; font-weight: 600; direction: ltr; opacity: 0.9; font-family: 'IBM Plex Sans Arabic', sans-serif; }
-
-.theme-buttons { position:fixed; top:20px; left:20px; display: flex; gap: 10px; }
-.theme-buttons button { padding: 9px 16px; border-radius: 10px; border: none; cursor: pointer; font-family: 'Almarai'; font-weight: 800; font-size: 13px; }
-button.active { background: var(--egp); color: white; }
-
-#toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 12px 35px; border-radius: 50px; display: none; font-weight: 700; z-index: 9999; }
-.signature-bottom { font-family: 'Amiri', serif; font-size: 28px; margin-top: 40px; }
-</style>
+        .result-card { 
+            background: rgba(255,255,255,0.05); padding: 25px; border-radius: 20px; 
+            text-align: right; margin-top: 20px; border-right: 5px solid var(--accent); display: none;
+        }
+        .result-card h3 { color: var(--accent); margin-top: 0; }
+        .lang-box { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .lang-label { font-size: 0.8rem; opacity: 0.7; display: block; }
+        .text-out { font-family: 'Amiri', serif; font-size: 1.6rem; color: #fff; }
+        
+        #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; padding: 10px 30px; border-radius: 50px; display: none; }
+    </style>
 </head>
+<body>
 
-<body class="dark" id="mainBody">
-<div id="toast">تم النسخ بنجاح ✅</div>
-<div class="theme-buttons">
-  <button onclick="setTheme('dark')" id="btn-dark">لـيـلـي</button>
-  <button onclick="setTheme('light')" id="btn-light">نـهـاري</button>
-</div>
+<div id="toast">تم النسخ ✅</div>
 
 <div class="container">
-<div class="signature-top">ABU ZAID</div>
-<div class="header-info">
-    <div id="hijriDate" class="date-style" style="text-align: right;"></div>
-    <div class="clock" id="clock"></div>
-    <div id="gregDate" class="date-style" style="text-align: left;"></div>
-</div>
+    <div class="branding">أَبُو زَيْد | ABU ZAID</div>
+    
+    <div class="info-bar">
+        <div id="hijri">جاري التحميل...</div>
+        <div id="gregorian">جاري التحميل...</div>
+    </div>
 
-<div class="input-group">
-    <input type="text" id="numberInput" placeholder="أدخل الرقم" oninput="App.handleInput(this)" onkeydown="if(event.key==='Enter') App.execute()">
-    <button class="convert-btn" onclick="App.execute()">تـفـقـيـط الـآن</button>
-</div>
+    <div class="clock" id="clock">00:00:00</div>
 
-<div id="historyBox" style="display:flex; gap:10px; justify-content:center; margin-bottom:20px; flex-wrap: wrap;"></div>
+    <div class="input-area">
+        <input type="number" id="amountInput" placeholder="أدخل المبلغ (مثال: 1234.56)" step="0.01">
+        <select id="currencySelect">
+            </select>
+        <button class="btn" onclick="processTafqeet()">تـفـقـيـط الـآن</button>
+    </div>
 
-<div class="results-grid">
-    <div class="card" onclick="App.copyCard('EGP')" style="border-right: 5px solid var(--egp)"><span class="currency-label" style="color:var(--egp)">الجنيه المصري</span><div class="ar-text" id="txt-EGP-AR">--</div><div class="en-text" id="txt-EGP-EN" style="color:var(--egp)">--</div></div>
-    <div class="card" onclick="App.copyCard('SAR')" style="border-right: 5px solid var(--sar)"><span class="currency-label" style="color:var(--sar)">الريال السعودي</span><div class="ar-text" id="txt-SAR-AR">--</div><div class="en-text" id="txt-SAR-EN" style="color:var(--sar)">--</div></div>
-    <div class="card" onclick="App.copyCard('USD')" style="border-right: 5px solid var(--usd)"><span class="currency-label" style="color:var(--usd)">الدولار الأمريكي</span><div class="ar-text" id="txt-USD-AR">--</div><div class="en-text" id="txt-USD-EN" style="color:var(--usd)">--</div></div>
-    <div class="card" onclick="App.copyCard('EUR')" style="border-right: 5px solid var(--eur)"><span class="currency-label" style="color:var(--eur)">اليورو الأوروبي</span><div class="ar-text" id="txt-EUR-AR">--</div><div class="en-text" id="txt-EUR-EN" style="color:var(--eur)">--</div></div>
-</div>
+    <div id="resultArea" class="result-card">
+        <div class="lang-box" onclick="copyText('arOut')">
+            <span class="lang-label">باللغة العربية:</span>
+            <div id="arOut" class="text-out">--</div>
+        </div>
+        <div class="lang-box" onclick="copyText('enOut')">
+            <span class="lang-label">In English:</span>
+            <div id="enOut" class="text-out" dir="ltr" style="text-align: left; font-family: sans-serif; font-size: 1.2rem;">--</div>
+        </div>
+        <div class="lang-box" onclick="copyText('frOut')">
+            <span class="lang-label">En Français:</span>
+            <div id="frOut" class="text-out" dir="ltr" style="text-align: left; font-family: sans-serif; font-size: 1.2rem;">--</div>
+        </div>
+    </div>
 
-<div class="signature-bottom">تصميم وتطوير: أَبُو زَيْد</div>
+    <div style="margin-top: 30px; opacity: 0.5; font-family: 'Amiri'; font-size: 1.2rem;">
+        تصميم وتطوير: أَبُو زَيْد | 2026
+    </div>
 </div>
 
 <script>
-const AZEngine = {
-    ones: { 
-        m:['', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة', 'ستة', 'سبعة', 'ثمانية', 'تسعة', 'عشرة', 'أحد عشر', 'اثنا عشر', 'ثلاثة عشر', 'أربعة عشر', 'خمسة عشر', 'ستة عشر', 'سبعة عشر', 'ثمانية عشر', 'تسعة عشر'],
-        f:['', 'واحدة', 'اثنتان', 'ثلاث', 'أربع', 'خمس', 'ست', 'سبع', 'ثمان', 'تسع', 'عشر', 'إحدى عشرة', 'اثنتا عشرة', 'ثلاث عشرة', 'أربع عشرة', 'خمس عشرة', 'ست عشرة', 'سبع عشرة', 'ثمان عشرة', 'تسع عشرة'] 
-    },
-    tens: ['', '', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون', 'ستون', 'سبعون', 'ثمانون', 'تسعون'],
-    hundreds: ['', 'مائة', 'مائتان', 'ثلاثمائة', 'أربعمائة', 'خمسمائة', 'ستمائة', 'سبعمائة', 'ثمانمائة', 'تسعمائة'],
-
-    processGroup(n, gender='m') {
-        if (n === 0) return '';
-        if (n < 20) return this.ones[gender][n];
-        if (n < 100) return (n % 10 === 0) ? this.tens[n / 10] : this.ones[gender][n % 10] + ' و' + this.tens[Math.floor(n / 10)];
-        let h = Math.floor(n / 100), r = n % 100;
-        return (r > 0) ? this.hundreds[h] + ' و' + this.processGroup(r, gender) : this.hundreds[h];
-    },
-
-    tafqeetAR(val, type) {
-        if (!val || isNaN(val) || parseFloat(val) === 0) return "--";
-        let [intP, decP] = val.toString().split('.');
-        let n = BigInt(intP || 0), d = parseInt((decP || "").substring(0, 2).padEnd(2, '0')) || 0;
-        
-        const cfg = { 
-            EGP:{s:'جنيه مصري', d:'جنيهان مصريان', p:'جنيهات مصرية', f:'قرش', fd:'قرشان', fp:'قروش', g:'m', fg:'m', adj:'مصريًا'}, 
-            SAR:{s:'ريال سعودي', d:'ريالان سعوديان', p:'ريالات سعودية', f:'هللة', fd:'هللتان', fp:'هللات', g:'m', fg:'f', adj:'سعوديًا'}, 
-            USD:{s:'دولار أمريكي', d:'دولاران أمريكيان', p:'دولارات أمريكية', f:'سنت', fd:'سنتان', fp:'سنتات', g:'m', fg:'m', adj:'أمريكيًا'},
-            EUR:{s:'يورو أوروبي', d:'يوروان أوروبيان', p:'يوروهات أوروبية', f:'سنت', fd:'سنتان', fp:'سنتات', g:'m', fg:'m', adj:'أوروبيًا'}
-        }[type];
-
-        let parts = [];
-        let tempN = n;
-        let scales = [{v:1000000000n, n:'مليار', p:'مليارات'}, {v:1000000n, n:'مليون', p:'ملايين'}, {v:1000n, n:'ألف', p:'آلاف'}];
-        
-        scales.forEach(sc => {
-            let c = Number(tempN / sc.v);
-            if (c > 0) {
-                if (c === 1) parts.push(sc.n); else if (c === 2) parts.push(sc.n + 'ان');
-                else parts.push(this.processGroup(c, 'm') + " " + (c <= 10 ? sc.p : sc.n + 'ًا'));
-                tempN %= sc.v;
-            }
-        });
-
-        let rem = Number(tempN);
-        if (rem > 0 || (n > 0n && parts.length === 0)) {
-            if (rem === 1) parts.push(cfg.s); 
-            else if (rem === 2) parts.push(cfg.d);
-            else if (rem % 100 === 10) { // تم الإصلاح هنا: أي رقم ينتهي بـ 10
-                parts.push(this.processGroup(rem, 'm') + " " + cfg.p);
-            }
-            else {
-                let unit = (rem >= 3 && rem <= 10) ? cfg.p : (cfg.s.split(' ')[0] + "ًا " + cfg.adj);
-                parts.push(this.processGroup(rem, cfg.g) + " " + unit);
-            }
-        }
-
-        let res = "فقط وقدره " + parts.join(' و');
-        if (d > 0) {
-            res += (n > 0n ? " و" : "");
-            if (d === 1) res += cfg.f + " " + this.ones[cfg.fg][1];
-            else if (d === 2) res += cfg.fd;
-            else if (d % 100 === 10) res += this.processGroup(d, cfg.fg) + " " + cfg.fp;
-            else res += this.processGroup(d, cfg.fg) + " " + (d <= 10 ? cfg.fp : (cfg.f.endsWith('ة') ? cfg.f + "ً" : cfg.f + "ًا"));
-        }
-        return res + " لا غير";
-    },
-
-    tafqeetEN(val, type) {
-        if (!val || isNaN(val) || parseFloat(val) === 0) return "--";
-        const fmt = (num) => {
-            const s = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
-            const t = ['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
-            if (num < 20) return s[num];
-            if (num < 100) return t[Math.floor(num/10)] + (num%10 !== 0 ? "-" + s[num%10] : "");
-            if (num < 1000) return s[Math.floor(num/100)] + " Hundred" + (num%100 !== 0 ? " and " + fmt(num%100) : "");
-            return "";
-        };
-        let [intP, decP] = val.toString().split('.');
-        let n = BigInt(intP || 0), d = parseInt((decP || "").substring(0, 2).padEnd(2, '0')) || 0;
-        let words = [], rem = n;
-        [{v: 1000000000n, n: "Billion"}, {v: 1000000n, n: "Million"}, {v: 1000n, n: "Thousand"}].forEach(sc => { let c = rem / sc.v; if (c > 0n) { words.push(fmt(Number(c)) + " " + sc.n); rem %= sc.v; } });
-        if (rem > 0n || (n > 0n && words.length === 0)) words.push(fmt(Number(rem)));
-        let cur = n === 1n ? {EGP:'Egyptian Pound', SAR:'Saudi Riyal', USD:'US Dollar', EUR:'Euro'}[type] : {EGP:'Egyptian Pounds', SAR:'Saudi Riyals', USD:'US Dollars', EUR:'Euros'}[type];
-        let frac = d === 1 ? {EGP:'Piastre', SAR:'Halala', USD:'Cent', EUR:'Cent'}[type] : {EGP:'Piastres', SAR:'Halalas', USD:'Cents', EUR:'Cents'}[type];
-        let res = "Only " + (n > 0n ? words.join(', ') + " " + cur : "");
-        if (d > 0) res += (n > 0n ? " and " : "") + fmt(d) + " " + frac;
-        return res + " only.";
-    }
+// --- بيانات المحرك (من كود بايثون المختار) ---
+const CURRENCIES = {
+    "EGP": { name: "الجنيه المصري", unit: {m:"جنيه", d:"جنيهان", p:"جنيهات", t:"جنيهًا", g:"m"}, sub: {m:"قرش", d:"قرشان", p:"قروش", t:"قرشًا", g:"m"}, en: ["Pound", "Pounds", "Piastre", "Piastres"], fr: ["Livre", "Livres", "Piastre", "Piastres"] },
+    "SAR": { name: "الريال السعودي", unit: {m:"ريال", d:"ريالان", p:"ريالات", t:"ريالًا", g:"m"}, sub: {m:"هللة", d:"هللتان", p:"هللات", t:"هللةً", g:"f"}, en: ["Riyal", "Riyals", "Halala", "Halalas"], fr: ["Riyal", "Riyals", "Halala", "Halalas"] },
+    "USD": { name: "الدولار الأمريكي", unit: {m:"دولار", d:"دولاران", p:"دولارات", t:"دولارًا", g:"m"}, sub: {m:"سنت", d:"سنتان", p:"سنتات", t:"سنتًا", g:"m"}, en: ["Dollar", "Dollars", "Cent", "Cents"], fr: ["Dollar", "Dollars", "Centime", "Centimes"] },
+    "EUR": { name: "اليورو الأوروبي", unit: {m:"يورو", d:"يوروان", p:"يوروهات", t:"يوروًا", g:"m"}, sub: {m:"سنت", d:"سنتان", p:"سنتات", t:"سنتًا", g:"m"}, en: ["Euro", "Euros", "Cent", "Cents"], fr: ["Euro", "Euros", "Centime", "Centimes"] },
+    "KWD": { name: "الدينار الكويتي", unit: {m:"دينار", d:"ديناران", p:"دنانير", t:"دينارًا", g:"m"}, sub: {m:"فلس", d:"فلسان", p:"فلوس", t:"فلسًا", g:"m"}, en: ["Dinar", "Dinars", "Fils", "Fils"], fr: ["Dinar", "Dinars", "Fils", "Fils"] }
 };
 
-const App = {
-    history: JSON.parse(localStorage.getItem('aze_history') || '[]'),
-    handleInput(el) {
-        let raw = el.value.replace(/[^\d.]/g, '');
-        let parts = raw.split('.');
-        el.value = (parts[0] ? parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "") + (parts[1] !== undefined ? "." + parts[1] : "");
-    },
-    execute() {
-        const input = document.getElementById('numberInput');
-        const raw = input.value.replace(/,/g, '');
-        if (!raw) return;
-        ['EGP', 'SAR', 'USD', 'EUR'].forEach(c => {
-            document.getElementById(`txt-${c}-AR`).innerText = AZEngine.tafqeetAR(raw, c);
-            document.getElementById(`txt-${c}-EN`).innerText = AZEngine.tafqeetEN(raw, c);
-        });
-        if (!this.history.includes(input.value)) {
-            this.history.unshift(input.value);
-            if (this.history.length > 5) this.history.pop();
-            localStorage.setItem('aze_history', JSON.stringify(this.history));
-            this.renderHistory();
-        }
-    },
-    renderHistory() {
-        document.getElementById('historyBox').innerHTML = this.history.map(num => `<div style="padding:4px 11px; border:1px solid rgba(128,128,128,0.3); border-radius:15px; cursor:pointer; font-size:11px" onclick="App.recall('${num}')">${num}</div>`).join('');
-    },
-    recall(n) { document.getElementById('numberInput').value = n; this.execute(); },
-    copyCard(type) {
-        navigator.clipboard.writeText(document.getElementById(`txt-${type}-AR`).innerText);
-        const t = document.getElementById("toast"); t.style.display="block"; setTimeout(()=>t.style.display="none",1500);
-    }
+const AR_ONES = {
+    m: ["صفر", "واحد", "اثنان", "ثلاثة", "أربعة", "خمسة", "ستة", "سبعة", "ثمانية", "تسعة", "عشرة", "أحد عشر", "اثنا عشر"],
+    f: ["صفر", "واحدة", "اثنتان", "ثلاث", "أربع", "خمس", "ست", "سبع", "ثمان", "تسع", "عشر", "إحدى عشرة", "اثنتا عشرة"]
 };
 
-function setTheme(m){ document.getElementById('mainBody').className = m; document.querySelectorAll('.theme-buttons button').forEach(b=>b.classList.remove('active')); document.getElementById('btn-'+m).classList.add('active'); }
-function updateDateTime() {
-    const now = new Date();
-    document.getElementById("clock").innerText = now.toLocaleTimeString('ar-EG', {hour12: true, hour:'2-digit', minute:'2-digit', second:'2-digit'});
-    document.getElementById("hijriDate").innerText = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', {weekday:'long', day:'numeric', month:'long', year:'numeric'}).format(now);
-    document.getElementById("gregDate").innerText = new Intl.DateTimeFormat('ar-EG', {weekday:'long', day:'numeric', month:'long', year:'numeric'}).format(now);
+// --- منطق التفقيط العربي المحترف ---
+function arNumberToWords(n, gender = 'm') {
+    if (n <= 12) return AR_ONES[gender][n];
+    if (n < 20) return (gender === 'm' ? AR_ONES['m'][n-10] + " عشر" : AR_ONES['f'][n-10] + " عشرة");
+    if (n < 100) {
+        const tens = ["", "", "عشرون", "ثلاثون", "أربعون", "خمسون", "ستون", "سبعون", "ثمانون", "تسعون"];
+        const t = Math.floor(n / 10), o = n % 10;
+        return o === 0 ? tens[t] : AR_ONES[gender][o] + " و" + tens[t];
+    }
+    if (n < 1000) {
+        const hunds = ["", "مائة", "مائتان", "ثلاثمائة", "أربعمائة", "خمسمائة", "ستمائة", "سبعمائة", "ثمانمائة", "تسعمائة"];
+        const h = Math.floor(n / 100), r = n % 100;
+        return r === 0 ? hunds[h] : hunds[h] + " و" + arNumberToWords(r, gender);
+    }
+    return n.toString(); // للأرقام الضخمة جداً
 }
-setTheme('dark'); updateDateTime(); setInterval(updateDateTime, 1000); App.renderHistory();
+
+function tafqitAR(major, minor, cur) {
+    let parts = [];
+    if (major > 0) {
+        let text = "";
+        if (major === 1) text = cur.unit.m;
+        else if (major === 2) text = cur.unit.d;
+        else if (major >= 3 && major <= 10) text = arNumberToWords(major, cur.unit.g) + " " + cur.unit.p;
+        else text = arNumberToWords(major, cur.unit.g) + " " + cur.unit.t;
+        parts.push(text);
+    }
+    if (minor > 0) {
+        let text = "";
+        if (minor === 1) text = cur.sub.m;
+        else if (minor === 2) text = cur.sub.d;
+        else if (minor >= 3 && minor <= 10) text = arNumberToWords(minor, cur.sub.g) + " " + cur.sub.p;
+        else text = arNumberToWords(minor, cur.sub.g) + " " + cur.sub.t;
+        parts.push(text);
+    }
+    return "فقط " + parts.join(" و") + " لا غير";
+}
+
+// --- وظائف الواجهة ---
+function processTafqeet() {
+    const val = document.getElementById('amountInput').value;
+    const code = document.getElementById('currencySelect').value;
+    if (!val) return;
+
+    const major = Math.floor(val);
+    const minor = Math.round((val - major) * 100);
+    const cur = CURRENCIES[code];
+
+    document.getElementById('arOut').innerText = tafqitAR(major, minor, cur);
+    document.getElementById('enOut').innerText = `Only ${major} ${major === 1 ? cur.en[0] : cur.en[1]} and ${minor} ${minor === 1 ? cur.en[2] : cur.en[3]} only.`;
+    document.getElementById('frOut').innerText = `Seulement ${major} ${major === 1 ? cur.fr[0] : cur.fr[1]} et ${minor} ${minor === 1 ? cur.fr[2] : cur.fr[3]} seulement.`;
+    
+    document.getElementById('resultArea').style.display = 'block';
+}
+
+function copyText(id) {
+    const txt = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(txt);
+    const t = document.getElementById('toast');
+    t.style.display = 'block';
+    setTimeout(() => t.style.display = 'none', 1500);
+}
+
+// --- تحديث البيانات الفورية ---
+function init() {
+    const sel = document.getElementById('currencySelect');
+    for (let c in CURRENCIES) {
+        let opt = document.createElement('option');
+        opt.value = c;
+        opt.text = CURRENCIES[c].name;
+        sel.add(opt);
+    }
+
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString('ar-EG');
+        document.getElementById('gregorian').innerText = now.toLocaleDateString('ar-EG', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+        document.getElementById('hijri').innerText = now.toLocaleDateString('ar-SA-u-ca-islamic-umalqura', {day:'numeric', month:'long', year:'numeric'}) + " هـ";
+    }, 1000);
+}
+
+init();
 </script>
 </body>
 </html>
